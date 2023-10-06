@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque de Peças</title>
+</head>
+<body style="background-color: white; ">
+        <div>
+            <table border="1">
+                <tr>
+                    <td>Modelo</td>
+                    <% for(let i = 0; i < pecas.length; i++) { %>
+                        <td><%=pecas[i]%></td>
+                    <% } %>
+                </tr>
+                    <% for(let i = 0; i < dados.length; i++) { %>
+                        <tr>
+                            <td><%=dados[i].modelo%></td>
+                            <td><%=dados[i].fusao%></td>
+                            <td><%=dados[i].gaveta%></td>
+                            <td><%=dados[i].traseira%></td>
+                            <td><%=dados[i].frontal%></td>
+                        </tr>
+                    <% } %>
+                    
+                </tr>
+
+            </table>
+        </div>
+</body>
+</html>
