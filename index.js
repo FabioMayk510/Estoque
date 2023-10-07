@@ -23,7 +23,11 @@ app.get('/', (req, res) => {
 })
 
 app.get('/adcionar', (req, res) => {
-    res.send("A Introduzir metodo")
+    res.render("add.ejs")
+})
+
+app.post('/add', (req, res) => {
+    
 })
 
 app.get('/remover', (req, res) => {
