@@ -10,20 +10,32 @@
                 <option value="M4080" class="opt-modelo">M4080</option>
                 <option value="M404" class="opt-modelo">M404</option>
                 <option value="M428" class="opt-modelo">M428</option>
+                <option value="o" class="opt-modelo">Outro</option>
             </select>
-    
-            <!-- Adiciona um input hidden para enviar o valor selecionado via POST -->
+            <input type="text" name="Outro" id="o" class="modeloExtra">
             <input type="hidden" name="modeloSelecionado" id="modeloSelecionado">
+
+            <select name="peca" id="peca">
+                <% for (let i = 0; i < pecas.length; i++) { %>
+                    <option value='<%=pecas[i]%>' class="opt-peca"><%=pecas[i]%></option>
+                <% } %>
+            </select>
     
             <br><br>
     
-            <button type="submit">Enviar</button>
+            <button type="submit">Cadastrar</button>
         </form>
     
         <script>
             document.getElementById("modelo").addEventListener("change", function() {
                 // Obtém o valor selecionado
                 var selectedModelo = this.value;
+
+                if(selectedModelo === "o"){
+                    document.getElementById("o").className = "visivel";
+                } else {
+                    document.getElementById("o").className = "modeloExtra";
+                }
     
                 // Define o valor do input hidden com o modelo selecionado
                 document.getElementById("modeloSelecionado").value = selectedModelo;

@@ -23,7 +23,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/adcionar', (req, res) => {
-    res.render("add.ejs")
+    axios.get("http://localhost:7000/Pecas").then(peca => {
+        var pecas = peca.data;
+        res.render("add.ejs", {pecas: pecas})
+    })
 })
 
 app.post('/add', (req, res) => {

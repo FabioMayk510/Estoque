@@ -16,6 +16,15 @@
     }
     }
 
+
 table{
     background-color: black;
+}
+
+.modeloExtra{
+    display: none;
+}
+
+.visivel{
+    display: block;
 }
