@@ -1,0 +1,31 @@
+{
+  "index": [
+    {
+      "modelo": "M4020",
+      "fusao": "14",
+      "gaveta": "0",
+      "traseira": "1",
+      "frontal": "0"
+    },
+    {
+      "modelo": "M4070",
+      "fusao": "14",
+      "gaveta": "0",
+      "traseira": "1",
+      "frontal": "0"
+    },
+    {
+      "modelo": "M4080",
+      "fusao": "14",
+      "gaveta": "0",
+      "traseira": "0",
+      "frontal": "0"
+    }
+  ],
+  "Pecas": [
+    "fusao",
+    "gaveta",
+    "traseira",
+    "frontal"
+  ]
+}

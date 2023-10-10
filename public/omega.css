@@ -18,9 +18,14 @@
 
 
 table{
-    background-color: black;
+    background-color: rgb(247, 244, 245); 
+    margin: 0 auto; /* Define as margens horizontalmente como "auto" */
+    
 }
 
+body{
+    background-image: url('https://th.bing.com/th/id/OIP.Ewt9Hk5XJjEDizw_NvxDzAHaDt?pid=ImgDet&rs=1');
+}
 .modeloExtra{
     display: none;
 }
