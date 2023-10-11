@@ -1,31 +1,34 @@
 {
-    "index":[
+  "index": [
+    {
+      "modelo": "M402x/7x/8x",
+      "fusao": 14,
+      "gaveta": 0,
+      "traseira": 1,
+      "frontal": 0,
+      "teste": 2
+    },
+    {
+      "modelo": "M402x/7x/8x",
+      "pecas": [
         {
-            "modelo": "M4020",
-            "fusao": "14",
-            "gaveta": "0",
-            "traseira": "1",
-            "frontal": "0"
-        },
-        {
-            "modelo": "M4070",
-            "fusao": "14",
-            "gaveta": "0",
-            "traseira": "1",
-            "frontal": "0"
-        },
-        {
-            "modelo": "M4080",
-            "fusao": "14",
-            "gaveta": "0",
-            "traseira": "0",
-            "frontal": "0"
+            "fusao": 14,
+            "gaveta": 0,
+            "traseira": 1,
+            "frontal": 0,
+            "teste": 2
         }
-    ],
-    "Pecas":[
-        "fusao",
-        "gaveta",
-        "traseira",
-        "frontal"
-    ]
+      ]
+    },
+    {
+      "modelo": "404/432",
+      "fusao": 1
+    }
+  ],
+  "Pecas": [
+    "fusao",
+    "gaveta",
+    "traseira",
+    "frontal"
+  ]
 }

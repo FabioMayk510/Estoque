@@ -3,23 +3,31 @@
     <%- include("./header.ejs"); %>
 
     <body>
-        <form action="/add" method="post">
-            <select name="modelo" id="modelo">
-                <option value="M4020" class="opt-modelo">M4020</option>
-                <option value="M4070" class="opt-modelo">M4070</option>
-                <option value="M4080" class="opt-modelo">M4080</option>
-                <option value="M404" class="opt-modelo">M404</option>
-                <option value="M428" class="opt-modelo">M428</option>
-                <option value="o" class="opt-modelo">Outro</option>
-            </select>
-            <input type="text" name="Outro" id="o" class="modeloExtra">
-            <input type="hidden" name="modeloSelecionado" id="modeloSelecionado">
 
-            <select name="peca" id="peca">
-                <% for (let i = 0; i < pecas.length; i++) { %>
-                    <option value='<%=pecas[i]%>' class="opt-peca"><%=pecas[i]%></option>
-                <% } %>
-            </select>
+        <h2 class="tituloAdcPeca">Modelo: </h2>
+        <select name="selectModelo" id="modelo">
+            <% for (let i = 0; i < dados.length; i++) { %>
+                <option value='<%=dados[i].modelo%>'><%=dados[i].modelo%></option>
+            <% } %>
+            <option value="o" class="opt-modelo">Outro</option>
+        </select>
+
+        <h2 class="tituloAdcPeca">Peça: </h2>
+        <select name="oPeca" id="peca">
+            <% for (let i = 2; i < dados.length; i++) { %>
+                <option value='<%=pecas[i]%>' class="opt-peca"><%=pecas[i]%></option>
+            <% } %>
+            <option value="oo" class="opt-peca">Outro</option>
+        </select>
+
+
+        <form action="/add" method="post">
+            <input type="text" name="modelo" value="M4020" id="o" placeholder="Modelo..." class="modeloExtra" style="text-transform: uppercase;">
+
+            <input type="text" name="Peca" value="fusao" id="oo" placeholder="Peça..." class="modeloExtra">
+
+            <h2 class="tituloAdcPeca">Quantidade: </h2>
+            <input type="number" name="qnt" min="1" value="1" id="qntPeca">
     
             <br><br>
     
@@ -27,18 +35,33 @@
         </form>
     
         <script>
+            document.getElementById("peca").addEventListener("change", function() {
+                var selectedPeca = this.value;
+
+                if(selectedPeca === "oo"){
+                    document.getElementById("oo").className = "visivel";
+                    document.getElementById("oo").value = "";
+                    document.getElementById("oo").setAttribute("required", "required");
+                } else {
+                    document.getElementById("oo").className = "modeloExtra";
+                    document.getElementById("oo").removeAttribute("required");
+                    document.getElementById("oo").value = selectedPeca;
+                }
+            })
+
             document.getElementById("modelo").addEventListener("change", function() {
                 // Obtém o valor selecionado
                 var selectedModelo = this.value;
 
                 if(selectedModelo === "o"){
                     document.getElementById("o").className = "visivel";
+                    document.getElementById("o").value = "";
+                    document.getElementById("o").setAttribute("required", "required");
                 } else {
                     document.getElementById("o").className = "modeloExtra";
+                    document.getElementById("o").removeAttribute("required");
+                    document.getElementById("o").value = selectedModelo;
                 }
-    
-                // Define o valor do input hidden com o modelo selecionado
-                document.getElementById("modeloSelecionado").value = selectedModelo;
             });
         </script>
     </body>
