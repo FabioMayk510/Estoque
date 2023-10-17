@@ -3,25 +3,51 @@
     <%- include("./header.ejs"); %>
     <body style="background-color: white; ">
             <div>
-                <table>
+                <table border="1">
                     <tr>
                         <td>Modelo</td>
-                        <% for(let i = 0; i < pecas.length; i++) { %>
-                            <td><%=pecas[i]%></td>
+                        <% var lista = Object.keys(pecas[0]) 
+                        var nomePecas = []%>
+                        <% for(let i = 0; i < lista.length; i++) { 
+                            nomePecas.push(pecas[0][Object.keys(dados[0])[i]].desc)%>
+                            <td><%=nomePecas[i]%></td>
                         <% } %>
                     </tr>
-                        <% for(let i = 0; i < dados.length; i++) { %>
-                            <tr>
-                                <td><%=dados[i].modelo%></td>
-                                <td><%=dados[i].fusao%></td>
-                                <td><%=dados[i].gaveta%></td>
-                                <td><%=dados[i].traseira%></td>
-                                <td><%=dados[i].frontal%></td>
-                            </tr>
-                        <% } %>
-                        
-                    </tr>
+                    <%  
+                    const modelos = []
+                    for (const peca in pecas[0]) {
+                        const modelosDaPeca = pecas[0][peca].modelo;
+                        for (let i = 0; i < modelosDaPeca.length; i++){
+                            if (!modelos.includes(modelosDaPeca[i])) {
+                                modelos.push(modelosDaPeca[i])
+                            }
+                        }                            
+                    }
 
+                    function codigo(pecas, modeloEnv, nomePeca){
+                        const dadosFiltrados = {};
+                        
+                        for (let i = 0; i < nomePecas.length; i++) {
+                            for (const peca in pecas[0]) {
+                                const descDaPeca = pecas[0][peca].desc;
+                                if (descDaPeca === nomePeca) {
+                                    if (pecas[0][peca].modelo.includes(modeloEnv)){
+                                        return peca
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    %>
+                    <% for(let i = 0; i < modelos.length; i++) { %>
+                        <tr>
+                            <td><%=modelos[i]%></td>
+                            <% for(let j = 0; j < lista.length; j++) { %>
+                                    <td><%=dados[0][codigo(pecas, modelos[i], nomePecas[j])]%></td>
+                            <% } %>
+                        </tr>
+                    <% } %>
                 </table>
             </div>
     </body>

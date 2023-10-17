@@ -1,28 +1,38 @@
 {
   "index": [
     {
-      "modelo": "M402x/7x/8x",
-      "fusao": 14,
-      "gaveta": 0,
-      "traseira": 1,
-      "frontal": 0,
-      "teste": 2
-    },
-    {
+      "id": 1,
       "modelo": "M402x/7x/8x",
       "pecas": [
         {
-            "fusao": 14,
-            "gaveta": 0,
-            "traseira": 1,
-            "frontal": 0,
-            "teste": 2
+          "fusao": 18,
+          "gaveta": 4,
+          "traseira": 1,
+          "frontal": 0,
+          "duplex": 1,
+          "teste": 1
         }
       ]
     },
     {
+      "id": 2,
       "modelo": "404/432",
-      "fusao": 1
+      "pecas": [
+        {
+          "fusao": 6,
+          "frontal": 1
+        }
+      ]
+    },
+    {
+      "modelo": "m408",
+      "pecas": [
+        {
+          "gaveta": 1,
+          "frontal": 1
+        }
+      ],
+      "id": 3
     }
   ],
   "Pecas": [

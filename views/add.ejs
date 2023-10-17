@@ -3,56 +3,104 @@
     <%- include("./header.ejs"); %>
 
     <body>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <% var lista = Object.keys(pecas[0])
+        
+            var nomePecas = []
+            for(const peca in pecas[0].pecas){
+                
+                nomePecas.push(pecas[0].pecas[peca].desc)
+            }
+            console.log("pecas:: ", nomePecas)
+        %>
+        <%  
+            const modelos = []
+            for (const peca in pecas[0].pecas) {
+                console.log("antes:: ", pecas[0].pecas[peca])
+                const modelosDaPeca = pecas[0].pecas[peca].modelo;
+                for (let i = 0; i < modelosDaPeca.length; i++){
+                    if (!modelos.includes(modelosDaPeca[i])) {
+                        modelos.push(modelosDaPeca[i])
+                    }
+                }       
+            }
+        %>
+        <%
 
-        <h2 class="tituloAdcPeca">Modelo: </h2>
-        <select name="selectModelo" id="modelo">
-            <% for (let i = 0; i < dados.length; i++) { %>
-                <option value='<%=dados[i].modelo%>'><%=dados[i].modelo%></option>
-            <% } %>
-            <option value="o" class="opt-modelo">Outro</option>
-        </select>
-
-        <h2 class="tituloAdcPeca">Peça: </h2>
-        <select name="oPeca" id="peca">
-            <% for (let i = 2; i < dados.length; i++) { %>
-                <option value='<%=pecas[i]%>' class="opt-peca"><%=pecas[i]%></option>
-            <% } %>
-            <option value="oo" class="opt-peca">Outro</option>
-        </select>
-
-
-        <form action="/add" method="post">
-            <input type="text" name="modelo" value="M4020" id="o" placeholder="Modelo..." class="modeloExtra" style="text-transform: uppercase;">
-
-            <input type="text" name="Peca" value="fusao" id="oo" placeholder="Peça..." class="modeloExtra">
-
-            <h2 class="tituloAdcPeca">Quantidade: </h2>
-            <input type="number" name="qnt" min="1" value="1" id="qntPeca">
-    
-            <br><br>
-    
-            <button type="submit">Cadastrar</button>
-        </form>
-    
-        <script>
-            document.getElementById("peca").addEventListener("change", function() {
-                var selectedPeca = this.value;
-
-                if(selectedPeca === "oo"){
-                    document.getElementById("oo").className = "visivel";
-                    document.getElementById("oo").value = "";
-                    document.getElementById("oo").setAttribute("required", "required");
-                } else {
-                    document.getElementById("oo").className = "modeloExtra";
-                    document.getElementById("oo").removeAttribute("required");
-                    document.getElementById("oo").value = selectedPeca;
+            function codigo(pecas, modeloEnv, nomePeca){
+                const dadosFiltrados = {};
+                
+                for (let i = 0; i < nomePecas.length; i++) {
+                    for (const peca in pecas[0]) {
+                        const descDaPeca = pecas[0][peca].desc;
+                        if (descDaPeca === nomePeca) {
+                            if (pecas[0][peca].modelo.includes(modeloEnv)){
+                                return peca
+                            }
+                        }
+                    }
                 }
-            })
+            }
 
+        %>
+        <script>
             document.getElementById("modelo").addEventListener("change", function() {
                 // Obtém o valor selecionado
                 var selectedModelo = this.value;
+            })
+        </script>
+        <h2 class="tituloAdcPeca">Modelo: </h2>
+        <select name="selectModelo" id="modelo">
+            <% for (let i = 0; i < modelos.length; i++) { %>
+                <option value='<%=modelos[i]%>'><%=modelos[i]%></option>
+            <% } %>
+            <option value="o" class="opt-modelo">Outro</option>
+        </select>
+        <input type="text" name="modelo" value='<%=modelos[0]%>' id="o" placeholder="Modelo..." class="modeloExtra" style="text-transform: uppercase;">
 
+        <script>
+            document.getElementById("modelo").addEventListener("change", function() {
+                selectElement = document.getElementById("peca");
+                while (selectElement.firstChild) {
+                    selectElement.removeChild(selectElement.firstChild);
+                }
+                
+                // Obtém o valor selecionado
+                var selectedModelo = this.value;
+                console.log(selectedModelo)
+                const pecasFilt = [];
+                axios.get('http://localhost:5000/Pecas').then(pecas => {
+                    for (const peca in pecas.data[0].pecas) {
+                        const descDaPeca = pecas.data[0].pecas[peca].desc;
+                        if (pecas.data[0].pecas[peca].modelo.includes(selectedModelo)){
+                            pecasFilt.push(pecas.data[0].pecas[peca].desc)
+                            console.log("LALA", pecasFilt)
+
+                            var option = document.createElement("option");
+
+                            // Defina o valor e o texto do elemento <option>
+                            option.value = pecas.data[0].pecas[peca].desc;
+                            option.textContent = pecas.data[0].pecas[peca].desc;
+
+                            // Defina a classe do elemento <option>
+                            option.className = "opt-peca";
+
+                            // Adicione o elemento <option> a um elemento <select> existente (assumindo que você tem um elemento <select> com o ID "peca" no seu HTML)
+                            document.getElementById("peca").appendChild(option);
+                        }
+                    }
+                    var option = document.createElement("option");
+
+                            // Defina o valor e o texto do elemento <option>
+                            option.value = "oo";
+                            option.textContent = "Outro";
+
+                            // Defina a classe do elemento <option>
+                            option.className = "opt-peca";
+
+                            // Adicione o elemento <option> a um elemento <select> existente (assumindo que você tem um elemento <select> com o ID "peca" no seu HTML)
+                            document.getElementById("peca").appendChild(option);
+                })
                 if(selectedModelo === "o"){
                     document.getElementById("o").className = "visivel";
                     document.getElementById("o").value = "";
@@ -62,8 +110,66 @@
                     document.getElementById("o").removeAttribute("required");
                     document.getElementById("o").value = selectedModelo;
                 }
+
+                document.getElementById("envOutro").value = document.getElementById("o").value
             });
+
+            document.getElementById("o").addEventListener("change", function(){
+                var model = this.value;
+                console.log("Outro: ", model);
+                document.getElementById("envOutro").value = model
+            })
         </script>
+
+        <h2 class="tituloAdcPeca">Peça: </h2>
+        
+        <select name="oPeca" id="peca">
+        </select>
+
+        <script>
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var selectedPeca = document.getElementById("peca").value
+                if(selectedPeca === "oo"){
+                    document.getElementById("oo").className = "visivel";
+                    document.getElementById("oo").value = "";
+                    document.getElementById("oo").setAttribute("required", "required");
+                }
+            })
+
+            document.getElementById("peca").addEventListener("change", function() {
+                var selectedPeca = this.value;
+
+                if(selectedPeca === "oo"){
+                    document.getElementById("oo").className = "visivel";
+                    document.getElementById("ooo").className = "visivel";
+                    document.getElementById("oo").value = "";
+                    document.getElementById("ooo").value = "";
+                    document.getElementById("oo").setAttribute("required", "required");
+                    document.getElementById("ooo").setAttribute("required", "required");
+                } else {
+                    document.getElementById("oo").className = "modeloExtra";
+                    document.getElementById("oo").removeAttribute("required");
+                    document.getElementById("oo").value = selectedPeca;
+                    document.getElementById("ooo").className = "modeloExtra";
+                    document.getElementById("ooo").removeAttribute("required");
+                    document.getElementById("ooo").value = "";
+                }
+            })
+        </script>
+
+        <form action="/add" method="post">
+
+            <input type="text" name="Peca" value="fusao" id="oo" placeholder="Peça..." class="modeloExtra">
+            <input type="text" name="codigo" value="" id="ooo" placeholder="Codigo da peça..." class="modeloExtra">
+            <input type="hidden" name="modelo" id="envOutro" value="M4020">
+            <h2 class="tituloAdcPeca">Quantidade: </h2>
+            <input type="number" name="qnt" min="1" value="1" id="qntPeca">
+    
+            <br><br>
+    
+            <button type="submit">Cadastrar</button>
+        </form>
     </body>
     <%- include("./footer.ejs"); %>
 
